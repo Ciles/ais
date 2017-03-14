@@ -4,7 +4,7 @@ package model;
 
 public class Zakazchik {
     Integer id;
-    String fio;
-    String addres;
-    String telephone;
+    private String fio;
+    private String addres;
+    private String telephone;
 }

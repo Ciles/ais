@@ -5,8 +5,8 @@ import java.util.Date;
 
 
 public class Pasport {
-    Integer seria;
-    Integer namber;
-    Date vadacha;
-    String podrazdelenie;
+    private Integer seria;
+    private Integer namber;
+    private Date vadacha;
+    private String podrazdelenie;
 }
