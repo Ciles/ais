@@ -15,8 +15,8 @@ public class Zakaz {
     Float predoplata;
     String opmetka_oplata;
     String otmetka_ispoln;
-    Float ob_stoim;
-    String srok_ob_garan;
+    Float ob_stoimost;
+    String srok_ob_garantia;
     Uslugi usl1;
     Uslugi usl2;
     Uslugi usl3;
@@ -95,19 +95,19 @@ public class Zakaz {
     }
 
     public Float getOb_stoim() {
-        return ob_stoim;
+        return ob_stoimost;
     }
 
     public void setOb_stoim(Float ob_stoim) {
-        this.ob_stoim = ob_stoim;
+        this.ob_stoimost = ob_stoimost;
     }
 
     public String getSrok_ob_garan() {
-        return srok_ob_garan;
+        return srok_ob_garantia;
     }
 
     public void setSrok_ob_garan(String srok_ob_garan) {
-        this.srok_ob_garan = srok_ob_garan;
+        this.srok_ob_garantia = srok_ob_garan;
     }
 
     public Uslugi getUsl1() {
@@ -144,7 +144,7 @@ public class Zakaz {
 
     @Override
     public String toString() {
-        return  data + " " + zakazchik + " " + ob_stoim;
+        return  data + " " + zakazchik + " " + ob_stoimost;
     }
     
 }
