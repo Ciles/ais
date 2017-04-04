@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class Pasport {
 
+    private Integer id;
     private Integer seria;
     private Integer nomber;
     private Date vadacha;
@@ -46,4 +47,21 @@ public class Pasport {
     public String toString() {
         return  seria + " " + nomber;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getNomber() {
+        return nomber;
+    }
+
+    public void setNomber(Integer nomber) {
+        this.nomber = nomber;
+    }
+    
 }
