@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,11 +31,12 @@ public class SotrudnikDao implements Dao<Sotrudnik> {
              stmt.setInt(6, entity.getPasport().getId());
              stmt.setInt(7, entity.getDolznost().getId());
              stmt.execute();
-             ResultSet keys = stmt.getGeneratedKeys();
-              int id;
-              Integer id = null;
+             ResultSet keys;
+            keys = stmt.getGeneratedKeys();
+             
+               Integer id = null;
               if (keys.next()) {
-                  id = keys.getInt(1)
+                  id = keys.getInt(1);
                           }
              stmt.close();
              

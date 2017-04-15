@@ -8,6 +8,7 @@ public class Dolzhnost {
     String name;
     Float oklad;
     String obyazannost;
+    String obrazovanie;
     String trebovaniya;
     
     public Integer getId() {
@@ -40,6 +41,14 @@ public class Dolzhnost {
 
     public void setObyazannost(String obyazannost) {
         this.obyazannost = obyazannost;
+    }
+    
+     public String getObrazovanie() {
+        return obrazovanie;
+    }
+
+    public void setObrazovanie(String obyazannost) {
+        this.obrazovanie = obrazovanie;
     }
 
     public String getTrebovaniya() {
