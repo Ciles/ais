@@ -169,7 +169,7 @@ public class DolzhnostFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Dolzhnost uslugi = new Dolzhnost();
+        Dolzhnost dolzhnost = new Dolzhnost();
          dolzhnostList.add(dolzhnost);
         
     }//GEN-LAST:event_jButton1ActionPerformed

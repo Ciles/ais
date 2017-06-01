@@ -22,10 +22,10 @@ public class UslugiDao implements Dao<Uslugi>{
     @Override
     public Integer create(Uslugi entity) {
        String sql = "INSERT INTO `komp_firma`.`usluga` (`name`, `opisanie`, `stoimost`) VALUES (?, ?, ?);";
-         try (PreparedStatement st = con.prepareStatement(sql);) {
+         try (PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
              st.setString(1, entity.getName());
              st.setString(2, entity.getOpisanie());
-             st.setFloat(4, entity.getStoimost());
+             st.setFloat(3, entity.getStoimost());
              st.execute();
              ResultSet keys;
              keys = st.getGeneratedKeys();
@@ -33,6 +33,7 @@ public class UslugiDao implements Dao<Uslugi>{
              Integer id = null;
              if (keys.next()) {
                  id = keys.getInt(1);
+                 entity.setId(id);
              }
              st.close();
          } catch (SQLException ex) {
@@ -63,7 +64,7 @@ public class UslugiDao implements Dao<Uslugi>{
     @Override
     public List<Uslugi> readAll() {
         List<Uslugi> uslugi = new ArrayList<>();
-        String sql ="SELECT * FROM uslugi";
+        String sql ="SELECT * FROM usluga";
         try (Statement st = con.createStatement();) {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -94,6 +95,13 @@ public class UslugiDao implements Dao<Uslugi>{
         } catch (Exception ex) {
              ex.printStackTrace();
          }
+    }
+    public void save(Uslugi en) {
+        if(en.getId()== null) {
+            create(en);
+        } else {
+            update(en);
+        }
     }
     
 }

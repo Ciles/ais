@@ -5,7 +5,13 @@
  */
 package gui;
 
+import DAO.UslugiDao;
+import System.DateBase;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Uslugi;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
@@ -18,13 +24,28 @@ public class UslugiFrame extends javax.swing.JFrame {
 
     private ObservableList<Uslugi> uslugiList = ObservableCollections.observableList(new ArrayList<Uslugi>());
 
+    private Uslugi currentUslugi;
+    private UslugiDao dao;
+    
+    public Uslugi getCurrentUslugi() {
+        return currentUslugi;      
+    }
+    
+//    public void setCurrentUslugi(Uslugi )
     public ObservableList<Uslugi> getUslugiList() {
         return uslugiList;
     }
     
     
     public UslugiFrame() {
-        initComponents();
+        try {
+            Connection con;
+            con = DateBase.connect();
+            dao = new UslugiDao(con);
+            initComponents();
+        } catch (SQLException ex) {
+            Logger.getLogger(UslugiFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
@@ -40,7 +61,7 @@ public class UslugiFrame extends javax.swing.JFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        Table = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         controlPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -54,11 +75,16 @@ public class UslugiFrame extends javax.swing.JFrame {
         stoimostSpinner = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        Table.setColumnSelectionAllowed(true);
+        table.setColumnSelectionAllowed(true);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${uslugiList}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, Table);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, table);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
         columnBinding.setColumnName("Название");
         columnBinding.setColumnClass(String.class);
@@ -72,8 +98,8 @@ public class UslugiFrame extends javax.swing.JFrame {
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane1.setViewportView(Table);
-        Table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(table);
+        table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         controlPanel.setLayout(new javax.swing.BoxLayout(controlPanel, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -89,6 +115,11 @@ public class UslugiFrame extends javax.swing.JFrame {
         controlPanel.add(jButton2);
 
         jButton3.setText("Сохранить");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         controlPanel.add(jButton3);
 
         imputPanel.setLayout(new java.awt.GridLayout(3, 2));
@@ -96,7 +127,7 @@ public class UslugiFrame extends javax.swing.JFrame {
         nameLabel.setText("Название");
         imputPanel.add(nameLabel);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, Table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.name}"), nameTextField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.name}"), nameTextField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         imputPanel.add(nameTextField);
@@ -104,7 +135,7 @@ public class UslugiFrame extends javax.swing.JFrame {
         opisanieLabel.setText("Описание");
         imputPanel.add(opisanieLabel);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, Table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.opisanie}"), opisanieTextField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.opisanie}"), opisanieTextField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         imputPanel.add(opisanieTextField);
@@ -114,7 +145,7 @@ public class UslugiFrame extends javax.swing.JFrame {
 
         stoimostSpinner.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 1.0f));
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, Table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.stoimost}"), stoimostSpinner, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.stoimost}"), stoimostSpinner, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         imputPanel.add(stoimostSpinner);
@@ -148,9 +179,22 @@ public class UslugiFrame extends javax.swing.JFrame {
         uslugiList.add(uslugi);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int idx = table.getSelectedRow();
+        Uslugi u = uslugiList.get(idx);
+        dao.save(u);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        load();
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
+    private void load() {
+        uslugiList.addAll(dao.readAll());
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -185,7 +229,6 @@ public class UslugiFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable Table;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel imputPanel;
     private javax.swing.JButton jButton1;
@@ -198,6 +241,7 @@ public class UslugiFrame extends javax.swing.JFrame {
     private javax.swing.JTextField opisanieTextField;
     private javax.swing.JLabel stoimostLabel;
     private javax.swing.JSpinner stoimostSpinner;
+    private javax.swing.JTable table;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

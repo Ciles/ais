@@ -8,6 +8,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -45,7 +48,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="Table">
+        <Component class="javax.swing.JTable" name="table">
           <Properties>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="1">
@@ -72,7 +75,7 @@
             </Property>
           </Properties>
           <BindingProperties>
-            <BindingProperty name="elements" source="Form" sourcePath="${uslugiList}" target="Table" targetPath="elements" updateStrategy="0" immediately="true">
+            <BindingProperty name="elements" source="Form" sourcePath="${uslugiList}" target="table" targetPath="elements" updateStrategy="0" immediately="true">
               <Subbinding sourcePath="${name}">
                 <BindingParameter name="NAME" value="&#x41d;&#x430;&#x437;&#x432;&#x430;&#x43d;&#x438;&#x435;"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
@@ -113,6 +116,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x421;&#x43e;&#x445;&#x440;&#x430;&#x43d;&#x438;&#x442;&#x44c;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -130,7 +136,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="nameTextField">
           <BindingProperties>
-            <BindingProperty name="text" source="Table" sourcePath="${selectedElement.name}" target="nameTextField" targetPath="text" updateStrategy="0" immediately="false">
+            <BindingProperty name="text" source="table" sourcePath="${selectedElement.name}" target="nameTextField" targetPath="text" updateStrategy="0" immediately="false">
               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
             </BindingProperty>
           </BindingProperties>
@@ -142,7 +148,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="opisanieTextField">
           <BindingProperties>
-            <BindingProperty name="text" source="Table" sourcePath="${selectedElement.opisanie}" target="opisanieTextField" targetPath="text" updateStrategy="0" immediately="false">
+            <BindingProperty name="text" source="table" sourcePath="${selectedElement.opisanie}" target="opisanieTextField" targetPath="text" updateStrategy="0" immediately="false">
               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
             </BindingProperty>
           </BindingProperties>
@@ -159,7 +165,7 @@
             </Property>
           </Properties>
           <BindingProperties>
-            <BindingProperty name="value" source="Table" sourcePath="${selectedElement.stoimost}" target="stoimostSpinner" targetPath="value" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="value" source="table" sourcePath="${selectedElement.stoimost}" target="stoimostSpinner" targetPath="value" updateStrategy="0" immediately="false"/>
           </BindingProperties>
         </Component>
       </SubComponents>
